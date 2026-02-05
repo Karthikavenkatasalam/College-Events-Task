@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Northview College Events</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            padding: 10px;
+            background: #ecf0f1;
+        }
+
+        .events {
+            padding: 20px;
+        }
+
+        .event {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<header>
+    <div>
+        <strong>🎓 Bannari Amman Institute of Technology</strong>
+    </div>
+
+    
+</header>
+
+
+<div class="search-bar">
+    Search: 
+    <input type="text" id="search" onkeyup="showEvents()">
+
+    Category:
+    <select id="category" onchange="showEvents()">
+        <option value="All">All</option>
+        <option value="Sports">Sports</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Lecture">Lecture</option>
+    </select>
+</div>
+
+
+<div class="events" id="eventList"></div>
+
+
+<div style="text-align:center;">
+    <button onclick="prevPage()">Previous</button>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+
+<footer>
+    <p>📞 638034620| ✉️ bitsathy@ac.in</p>
+    
+</footer>
+
+<script>
+    var events = [
+        { title: "Football Match", date: "2026-02-10", category: "Sports", desc: "Inter college match" },
+        { title: "AI Workshop", date: "2026-02-12", category: "Workshop", desc: "Learn AI basics" },
+        { title: "Guest Lecture", date: "2026-02-15", category: "Lecture", desc: "Industry expert talk" },
+        { title: "Cricket Match", date: "2026-02-18", category: "Sports", desc: "Friendly match" },
+        { title: "Web Workshop", date: "2026-02-20", category: "Workshop", desc: "HTML & JS" }
+    ];
+
+    var page = 0;
+    var perPage = 2;
+
+    function showEvents() {
+        var list = document.getElementById("eventList");
+        list.innerHTML = "";
+
+        var search = document.getElementById("search").value.toLowerCase();
+        var category = document.getElementById("category").value;
+
+        var filtered = events.filter(function(e) {
+            return (e.title.toLowerCase().includes(search)) &&
+                   (category == "All" || e.category == category);
+        });
+
+        var start = page * perPage;
+        var end = start + perPage;
+
+        var pageEvents = filtered.slice(start, end);
+
+        for (var i = 0; i < pageEvents.length; i++) {
+            var ev = pageEvents[i];
+            list.innerHTML += 
+                "<div class='event'>" +
+                "<h3>" + ev.title + "</h3>" +
+                "<p>Date: " + ev.date + "</p>" +
+                "<p>" + ev.desc + "</p>" +
+                "<button>View Details</button>" +
+                "</div>";
+        }
+    }
+
+    function nextPage() {
+        page++;
+        showEvents();
+    }
+
+    function prevPage() {
+        if (page > 0) page--;
+        showEvents();
+    }
+
+    showEvents();
+</script>
+
+</body>
+</html>
